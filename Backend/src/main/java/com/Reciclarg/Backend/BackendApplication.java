@@ -1,13 +1,13 @@
-package cloud.reciclarg;
+package com.Reciclarg.Backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ReciclargAppApplication {
+public class BackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ReciclargAppApplication.class, args);
+		SpringApplication.run(BackendApplication.class, args);
 	}
 
 }
