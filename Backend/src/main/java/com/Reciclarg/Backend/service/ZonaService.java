@@ -1,41 +1,48 @@
 
 package com.Reciclarg.Backend.service;
 
-import com.Reciclarg.Backend.model.User;
-import com.Reciclarg.Backend.repository.UserRepository;
+
+import com.Reciclarg.Backend.model.Zona;
+import com.Reciclarg.Backend.repository.zonaRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService implements IUserService {
+public class ZonaService implements IZonaService {
 
-    @Autowired 
-    public UserRepository UserRepo;
+     @Autowired 
+    public zonaRepository zonaRepo;
+
+    @Override
+    public Zona buscarUserByName(String nombre) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return zonaRepo.findByNombre(nombre);
+    }
+
+    @Override
+    public List<Zona> VerZonas() {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return zonaRepo.findAll();
+    }
+
+    @Override
+    public void SaveZona(Zona zona) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        zonaRepo.save(zona);
+    }
+
+    @Override
+    public void borrarZona(Long id) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        zonaRepo.deleteById(id);
+    }
+
+    @Override
+    public Zona buscarZonaById(Long id) {
+       // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+       return zonaRepo.findById(id).orElse(null);
+    }
     
-    
- 
-    @Override
-    public User buscarUserByName(String username) {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        return UserRepo.findByUsername(username);
-    }
-
-    @Override
-    public void SaveUsuario(User user) {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    UserRepo.save(user);
-    }
-
-    @Override
-    public void borrarUsuario(Long id) {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-       UserRepo.deleteById(id);
-    }
-
-    @Override
-    public User buscarUserById(Long id) {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        return UserRepo.findById(id).orElse(null);
-    }
     
 }

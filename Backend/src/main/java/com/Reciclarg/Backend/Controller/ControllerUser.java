@@ -3,10 +3,7 @@ package com.Reciclarg.Backend.Controller;
 
 import com.Reciclarg.Backend.model.User;
 import com.Reciclarg.Backend.service.IUserService;
-import java.security.Timestamp;
-import java.time.Instant;
 
-import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
