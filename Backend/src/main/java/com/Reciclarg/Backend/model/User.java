@@ -11,6 +11,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.persistence.Transient;
 import java.security.Timestamp;
 import java.util.Date;
@@ -30,8 +32,11 @@ public class User {
     private String apellido;
     private String username;
     private String password;
-    private Timestamp  alta;
-    private Timestamp  baja;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date baja;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date  alta;
+   
     private boolean enable; 
     @Transient
     private String token;
@@ -76,19 +81,19 @@ public class User {
         this.password = password;
     }
 
-    public Timestamp getAlta() {
+    public Date getAlta() {
         return alta;
     }
 
-    public void setAlta(Timestamp alta) {
+    public void setAlta(Date alta) {
         this.alta = alta;
     }
 
-    public Timestamp getBaja() {
+    public Date getBaja() {
         return baja;
     }
 
-    public void setBaja(Timestamp baja) {
+    public void setBaja(Date baja) {
         this.baja = baja;
     }
 
@@ -128,9 +133,13 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "zona_id")
     private Zona zona; 
-    
+    /*
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
+    private FotoPerfil fotoPerfi;
+    */
+     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "foto_id")
     private FotoPerfil fotoPerfi;
   
     

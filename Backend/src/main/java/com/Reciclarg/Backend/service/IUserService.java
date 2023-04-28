@@ -1,8 +1,7 @@
 
 package com.Reciclarg.Backend.service;
-
 import com.Reciclarg.Backend.model.User;
-import java.util.List;
+
 
 
 public interface IUserService {
