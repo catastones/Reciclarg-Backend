@@ -48,6 +48,8 @@ public class ControllerUser {
         return null;
 
     }
+        
+        
         @PostMapping (path ="/newuser", consumes = {MULTIPART_FORM_DATA_VALUE})
         public String NuevoUsuario(@RequestPart("user")  User user, @RequestPart("image") MultipartFile file) {
             //Fatan verificar que los parametros de User no vengan vacios
@@ -94,7 +96,9 @@ public class ControllerUser {
           @GetMapping ("/verUser/{id}")
             @ResponseBody
           public User VerPerso(@PathVariable Long id){
-        return userService.buscarUserById(id);
+              User usuario = userService.buscarUserById(id);
+              usuario.setPassword("");
+          return usuario;
         
     }
 }
