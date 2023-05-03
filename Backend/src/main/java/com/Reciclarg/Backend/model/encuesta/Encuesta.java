@@ -9,7 +9,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import java.security.Timestamp;
+import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +24,8 @@ public class Encuesta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Timestamp date;
+     @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
     
     @ManyToOne
     @JoinColumn(name = "desecho_id")

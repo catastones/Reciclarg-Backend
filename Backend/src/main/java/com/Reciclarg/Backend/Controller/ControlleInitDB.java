@@ -2,15 +2,22 @@
 package com.Reciclarg.Backend.Controller;
 
 import com.Reciclarg.Backend.model.encuesta.Desecho;
+import com.Reciclarg.Backend.model.encuesta.Encuesta;
 import com.Reciclarg.Backend.model.encuesta.Motivo;
 import com.Reciclarg.Backend.model.encuesta.Paradero;
 import com.Reciclarg.Backend.model.encuesta.Pregunta;
 import com.Reciclarg.Backend.model.encuesta.Recicla;
 import com.Reciclarg.Backend.service.encuesta.IDesechoService;
+import com.Reciclarg.Backend.service.encuesta.IEncuestaService;
 import com.Reciclarg.Backend.service.encuesta.IMotivoService;
 import com.Reciclarg.Backend.service.encuesta.IParaderoService;
 import com.Reciclarg.Backend.service.encuesta.IPreguntaService;
 import com.Reciclarg.Backend.service.encuesta.IReciclaService;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +42,9 @@ public class ControlleInitDB {
     
      @Autowired   
     public IReciclaService reciclaServ; 
+     
+       @Autowired   
+    public IEncuestaService encuestaServ; 
      
      @GetMapping ("/opciones/{clave}")
      public String initOpciones(@PathVariable int clave){
@@ -104,4 +114,49 @@ public class ControlleInitDB {
              reciclaServ.SaveRecicla(o);
          }
      }
+      
+      @GetMapping ("/EncuestasInit/{clave}")
+     public String initEncuesta(@PathVariable int clave){
+         
+          if (clave == 123456) {
+              for (int i = 0; i < 1000; i++) {
+              
+              int idDesechos = (int)(Math.random()*7+1);
+              int idMotivoss = (int)(Math.random()*5+1);
+              int idParaderos = (int)(Math.random()*4+1);
+              int idPreguntas = (int)(Math.random()*4+1);
+              int idRecicla = (int)(Math.random()*3+1);
+              
+              Desecho desecho = desechoServ.BuscarDesechoById(new Long(idDesechos));
+              Motivo motivo = motivoServ.buscarMotivoById(new Long(idMotivoss));
+              Paradero paradero = paraderoServ.buscarParaderoById(new Long(idParaderos));
+              Pregunta pregunta = preguntaServ.buscarPreguntaById(new Long(idPreguntas));
+              Recicla recicla = reciclaServ.buscarReciclaById(new Long(idRecicla));
+              
+              Encuesta encuesta = new Encuesta();
+              encuesta.setDesecho(desecho);
+              encuesta.setMotivo(motivo);
+              encuesta.setParadero(paradero);
+              encuesta.setPregunta(pregunta);
+              encuesta.setRecicla(recicla);
+              
+              int menos = (int)(Math.random()*30+1);
+             LocalDate dateBefore30Days = LocalDate.now(ZoneId.of("Europe/Paris")).minusDays(menos);  
+             Date dia = convertToDate(dateBefore30Days);
+             encuesta.setDate(dia);
+             encuestaServ.SaveEncuesta(encuesta);
+             
+            }   
+              return "ingreso ok";
+          }
+          else{
+               return "error clave";
+                       }
+                  
+         }
+     
+     public Date convertToDate(LocalDate dateToConvert){
+    return java.sql.Date.valueOf(dateToConvert);
+    }
+
 }
