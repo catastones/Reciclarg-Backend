@@ -5,6 +5,7 @@ import com.Reciclarg.Backend.model.encuesta.Encuesta;
 import com.Reciclarg.Backend.service.encuesta.IEncuestaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ public class ControllerEncuesta {
     public IEncuestaService encuestaService;
     
      @GetMapping ("/listencuesta")
+     @CrossOrigin(origins = "http://127.0.0.1:5500")
      public List<Encuesta> ListarEncuestas(){
          
          return encuestaService.verEncuestas();
