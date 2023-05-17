@@ -138,7 +138,7 @@ public class User {
     @PrimaryKeyJoinColumn
     private FotoPerfil fotoPerfi;
     */
-     @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "foto_id")
     private FotoPerfil fotoPerfi;
   
