@@ -28,7 +28,7 @@ public class MarcadoresService implements IMarcadoresService{
     }
 
     @Override
-    public Marcadores buscarPreguntaById(Long id) {
+    public Marcadores buscarMarcadoresById(Long id) {
         return marcadoresRepo.findById(id).orElse(null);
     }
     

@@ -30,5 +30,5 @@ public class Nosotros {
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "foto_id")
-    private FotoPerfil fotoPerfi;
+    private FotoPerfil fotoPerfil;
 }
