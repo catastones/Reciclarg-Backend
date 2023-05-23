@@ -58,7 +58,7 @@ public class ControllerUser {
                   
                    user.setEnable(true);
                    //SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss z");
-                    Date Now = new Date(System.currentTimeMillis());
+                   Date Now = new Date(System.currentTimeMillis());
                    user.setAlta(Now);
                    user.setPassword(bcrypt.encode(user.getPassword()));
                     //userService.SaveUsuario(user);
@@ -66,22 +66,19 @@ public class ControllerUser {
                     
                    // Long idFoto = userService.buscarUserByName(user.getUsername()).getId();
                     foto = FotoPerfil.builder()
-                 .id(0)
-                .nombre(user.getUsername() + "_FotoPerfil")
-                .type(file.getContentType())
-                .photo(ImageUtil.compressImage(file.getBytes())).build();
+                    .id(0)
+                    .nombre(user.getUsername() + "_FotoPerfil")
+                    .type(file.getContentType())
+                    .photo(ImageUtil.compressImage(file.getBytes())).build();
                     user.setFotoPerfi(foto);                    
-                    //repoImagen.SaveFotoPerfil(file, user.getUsername(),idFoto);
-                   
-                    
-                }
+
+                    }
                 userService.SaveUsuario(user);
                      
                     
                 } catch (Exception e) {
                     return e.toString();
-                }
-               
+                }              
     
                 return "Registro ok";
             }
@@ -92,7 +89,7 @@ public class ControllerUser {
         }
         
           @GetMapping ("/verUser/{id}")
-            @ResponseBody
+          @ResponseBody
           public User VerPerso(@PathVariable Long id){
               User usuario = userService.buscarUserById(id);
               usuario.setPassword("");

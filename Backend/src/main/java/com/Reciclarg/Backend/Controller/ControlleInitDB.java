@@ -1,12 +1,16 @@
 
 package com.Reciclarg.Backend.Controller;
 
+import com.Reciclarg.Backend.model.User;
+import com.Reciclarg.Backend.model.Zona;
 import com.Reciclarg.Backend.model.encuesta.Desecho;
 import com.Reciclarg.Backend.model.encuesta.Encuesta;
 import com.Reciclarg.Backend.model.encuesta.Motivo;
 import com.Reciclarg.Backend.model.encuesta.Paradero;
 import com.Reciclarg.Backend.model.encuesta.Pregunta;
 import com.Reciclarg.Backend.model.encuesta.Recicla;
+import com.Reciclarg.Backend.service.IUserService;
+import com.Reciclarg.Backend.service.IZonaService;
 import com.Reciclarg.Backend.service.encuesta.IDesechoService;
 import com.Reciclarg.Backend.service.encuesta.IEncuestaService;
 import com.Reciclarg.Backend.service.encuesta.IMotivoService;
@@ -19,9 +23,12 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -43,18 +50,26 @@ public class ControlleInitDB {
      @Autowired   
     public IReciclaService reciclaServ; 
      
-       @Autowired   
+    @Autowired   
     public IEncuestaService encuestaServ; 
+       
+    @Autowired   
+    public IUserService userService;
+    
+    @Autowired   
+    public IZonaService zonService;
      
-     @GetMapping ("/opciones/{clave}")
-     public String initOpciones(@PathVariable int clave){
-         if (clave == 123456) {
+     @PostMapping ("/DataBaseInnit")
+     public String initOpciones(@RequestParam("clave") String clave){
+         if (clave.equals("123456")) {
              try {
+                 zona();
                  desechos();
                  motivos();
                  paraderos();
                  preguntas();
                  recicla();
+                 userInicial();
                  return "Ingreso Ok";
              } catch (Exception e) {
                  return e.toString();
@@ -65,6 +80,32 @@ public class ControlleInitDB {
          }
      }
      
+     
+     private void userInicial(){
+         User userInit = new User();
+         userInit.setNombre("Reciclarg");
+         userInit.setApellido("Administrador");
+         userInit.setUsername("admin");
+         BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+         userInit.setPassword(bcrypt.encode("Chiperos"));           
+         Date Now = new Date(System.currentTimeMillis());
+         userInit.setAlta(Now);
+         Zona zonaUser = zonService.buscarUserByName("NoZona");
+         userInit.setZona(zonaUser);
+         userService.SaveUsuario(userInit);
+         
+         
+         
+     }
+     
+     private void zona(){
+         Zona zonaInit = new Zona();
+         zonaInit.setNombre("NoZona");
+         zonaInit.setDescripcion("NoZona");
+         zonService.SaveZona(zonaInit);
+         
+         
+     }
      private void desechos(){
        String [] Desechos = {"Plastico","Vidrio","Metal","Papel","Organico","Carton","Otro"};
        
