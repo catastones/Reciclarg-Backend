@@ -1,4 +1,4 @@
-# Establecer la imagen base de Java 17 y Maven
+# Establecer la imagen base de OpenJDK 17
 FROM openjdk:17-jdk-slim AS build
 
 # Instalar Maven
@@ -18,8 +18,8 @@ RUN mvn package -DskipTests
 # Crear una nueva imagen utilizando una imagen base Tomcat
 FROM tomcat:latest
 
-# Copiar el archivo WAR generado en la imagen de Tomcat
-COPY --from=build /app/target/reciclarg.war /usr/local/tomcat/webapps/
+# Copiar el archivo JAR generado en la imagen de Tomcat
+COPY --from=build /app/target/Backend-0.0.1-SNAPSHOT.jar /usr/local/tomcat/webapps/reciclarg.war
 
 # Exponer el puerto 8080 (puerto predeterminado de Tomcat)
 EXPOSE 8080
