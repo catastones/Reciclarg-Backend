@@ -1,10 +1,10 @@
-package cloud.reciclarg;
+package com.Reciclarg.Backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ReciclargAppApplicationTests {
+class BackendApplicationTests {
 
 	@Test
 	void contextLoads() {
