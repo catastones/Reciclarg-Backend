@@ -1,5 +1,5 @@
 # Establecer la imagen base de Java 17 y Maven
-FROM adoptopenjdk:17-jdk-hotspot as build
+FROM openjdk:17-jdk-slim AS build
 
 # Establecer el directorio de trabajo
 WORKDIR /app
