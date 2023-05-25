@@ -12,9 +12,6 @@ jobs:
 
       - checkout
 
-      - setup_remote_docker:
-          version: 19.03.13
-
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run: docker build -t nicolaszelarayan/backend-reciclarg:$CIRCLE_SHA1 .
       - run: docker push nicolaszelarayan/backend-reciclarg:$CIRCLE_SHA1
