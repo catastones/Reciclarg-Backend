@@ -17,6 +17,7 @@ jobs:
       - run: docker push nicolaszelarayan/backend-reciclarg:$CIRCLE_SHA1
 
       - run: ssh -o StrictHostKeyChecking=no -t -t nicolas_zelarayan@reciclarg.cloud "cd /home/nicolas_zelarayan/backend/Reciclarg-Backend/ && sudo git pull"
+      - run: ssh -o StrictHostKeyChecking=no -t -t nicolas_zelarayan@reciclarg.cloud "cd /home/nicolas_zelarayan/backend/Reciclarg-Backend/ && sudo docker build -t backend-reciclarg"
       - run: ssh -o StrictHostKeyChecking=no -t -t nicolas_zelarayan@reciclarg.cloud "sudo docker stop backend_container || true"
       - run: ssh -o StrictHostKeyChecking=no -t -t nicolas_zelarayan@reciclarg.cloud "sudo docker rm backend_container || true"
       - run: ssh -o StrictHostKeyChecking=no -t -t nicolas_zelarayan@reciclarg.cloud "sudo docker run -p 8090:8080 -d --name backend_container nicolaszelarayan/backend-reciclarg:$CIRCLE_SHA1"
