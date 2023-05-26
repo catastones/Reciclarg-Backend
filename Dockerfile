@@ -19,7 +19,7 @@ RUN mvn package -DskipTests
 FROM tomcat:latest
 
 # Copiar el archivo JAR generado en la imagen de Tomcat
-COPY --from=build /app/target/Backend-0.0.1-SNAPSHOT.jar /usr/local/tomcat/webapps/reciclarg.jar
+COPY --from=build /app/target/Backend-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/Backend.war
 
 # Exponer el puerto 8080 (puerto predeterminado de Tomcat)
 EXPOSE 8080
