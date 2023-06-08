@@ -3,6 +3,7 @@ package com.Reciclarg.Backend.service;
 
 import com.Reciclarg.Backend.model.User;
 import com.Reciclarg.Backend.repository.UserRepository;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +15,7 @@ public class UserService implements IUserService {
     
     
  
-    @Override
-    public User buscarUserByName(String username) {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        return UserRepo.findByUsername(username);
-    }
+    
 
     @Override
     public void SaveUsuario(User user) {
@@ -36,6 +33,12 @@ public class UserService implements IUserService {
     public User buscarUserById(Long id) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         return UserRepo.findById(id).orElse(null);
+    }
+
+    @Override
+    public User buscarUserByName(String username) {
+        return UserRepo.findOneByUsername(username);
+        
     }
     
 }

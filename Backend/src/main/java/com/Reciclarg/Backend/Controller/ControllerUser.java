@@ -1,16 +1,31 @@
 
 package com.Reciclarg.Backend.Controller;
+
+
+
 import com.Reciclarg.Backend.model.FotoPerfil;
 import com.Reciclarg.Backend.model.User;
 import com.Reciclarg.Backend.service.IUserService;
 import com.Reciclarg.Backend.util.ImageUtil;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -21,11 +36,16 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("user")
 public class ControllerUser {
-    
+   //  @Autowired
+  //private AuthenticationManager authenticationManager;
      @Autowired   
     public IUserService userService;
      
-     
+    //@Autowired
+    //private JwtUtilService jwtUtilService;
+    
+    //@Autowired
+    //private UserDetailsService usuarioDetailsService;
    
      @PostMapping ("/login")
         public User getUser(@RequestParam("username") String username, @RequestParam("password") String password ){
@@ -35,8 +55,16 @@ public class ControllerUser {
         
         if (user != null) {
             if (bcrypt.matches(password, user.getPassword())) {// funcion matches verifica la igualdad entre el pass enviado y el pass encriptado
-                //String token = getJWTToken(usuario);
+                
+                // authenticationManager.authenticate(
+                //    new UsernamePasswordAuthenticationToken(username, password));
+                
+               // final UserDetails userDetails = usuarioDetailsService.loadUserByUsername(username);
+               // final String jwt = jwtUtilService.generateToken(userDetails);
+                
+                //String token = jwtUtilService.getJWTToken(username);
                 user.setPassword("");
+               // user.setToken(jwt);
                 return user;
                 
             }
@@ -96,4 +124,29 @@ public class ControllerUser {
           return usuario;
         
     }
+      
+    /**
+     *
+     * @param authenticationReq
+     * @return
+     */
+          /*
+    @PostMapping("/login2")
+    public ResponseEntity<User> authenticate(@RequestBody AuthenticationReq authenticationReq) {
+    
+
+    authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(authenticationReq.getUsername(),
+            authenticationReq.getPassword()));
+
+    final UserDetails userDetails = usuarioDetailsService.loadUserByUsername(
+        authenticationReq.getUsername());
+
+    final String jwt = jwtUtilService.generateToken(userDetails);
+        User usuarioOk = userService.buscarUserByName(authenticationReq.getUsername());
+        usuarioOk.setPassword("");
+        usuarioOk.setToken(jwt);
+    return ResponseEntity.ok(usuarioOk);
+  }
+*/
 }
