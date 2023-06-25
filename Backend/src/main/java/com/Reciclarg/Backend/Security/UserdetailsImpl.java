@@ -1,7 +1,9 @@
 
 package com.Reciclarg.Backend.Security;
 
+import com.Reciclarg.Backend.model.FotoPerfil;
 import com.Reciclarg.Backend.model.User;
+import com.Reciclarg.Backend.model.Zona;
 import java.util.Collection;
 import java.util.Collections;
 import lombok.AllArgsConstructor;
@@ -60,11 +62,27 @@ public class UserdetailsImpl implements UserDetails{
         return usuario.getId();
     }
     
-     
+    public String getZona(){
+        return usuario.getZona().getNombre();
+    }
+    
+    public byte[] getFoto(){
+        return usuario.getFotoPerfi().getPhoto();
+    }
+    
+   
     @Override  
     public String toString(){
-       return  "id: " +getId()+ " ,Nombre: " +getNombre() + " ,Apellido: " + getApellido()+
-                " ,username: "+ getUsername();
+     return String.format("{\n" +
+"    \"id\":\"%s\",\n" +
+"    \"nombre\":\"%s\",\n" +
+"    \"apellido\":\"%s\",\n" +
+"    \"zona\":\"%s\",\n" + 
+"    \"fotoPerfil\":\"%s\",\n" + 
+"    \"username\":\"%s\"\n" +             
+"}", getId(), getNombre(), getApellido(),getZona(),getFoto(),getUsername());
+
+       
     }
      
 }
