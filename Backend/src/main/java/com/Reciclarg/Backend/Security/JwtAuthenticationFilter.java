@@ -1,6 +1,8 @@
 
 package com.Reciclarg.Backend.Security;
 
+import com.Reciclarg.Backend.model.User;
+import com.Reciclarg.Backend.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -10,6 +12,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -17,7 +20,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
-    
+     @Autowired 
+    private UserRepository UserRepo;  
     @Override
      public Authentication attemptAuthentication(HttpServletRequest request, 
                                                 HttpServletResponse response) 
@@ -44,8 +48,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
          
        UserdetailsImpl userDetails = (UserdetailsImpl) authResult.getPrincipal();
        
+       
        String token = TokenUtil.createToken(userDetails.getNombre(), userDetails.getUsername());
        response.addHeader("Authorization", "Bearer " + token);
+      
+       //User usuario = UserRepo.findOneByUsername(userDetails.getUsername());
+       //usuario.setPassword("");
+       //usuario.setToken(token);
+       response.getWriter().write(userDetails.toString());
+         System.out.println("Usuario Identificado");
        response.getWriter().flush();
        
          super.successfulAuthentication(request, response, chain, authResult);

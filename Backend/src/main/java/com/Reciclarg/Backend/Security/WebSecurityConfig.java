@@ -1,7 +1,11 @@
 
 package com.Reciclarg.Backend.Security;
 
+import jakarta.servlet.MultipartConfigElement;
+import java.util.Arrays;
+import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,8 +18,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @AllArgsConstructor
@@ -30,10 +38,15 @@ public class WebSecurityConfig {
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter();
         jwtAuthenticationFilter.setAuthenticationManager(authManager);
         jwtAuthenticationFilter.setFilterProcessesUrl("/login");
+        
      
         return http
+         .cors(withDefaults())
         .csrf().disable() // (2)
+        
         .authorizeRequests()
+                .requestMatchers("/zona/listarzonas").permitAll()
+                .requestMatchers("/user/newuser").permitAll()
         .anyRequest()
         .authenticated()
         .and()
@@ -42,8 +55,11 @@ public class WebSecurityConfig {
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
+            
             .addFilter(jwtAuthenticationFilter)
-               .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
+           
+                
             .build();
          
     }
@@ -58,6 +74,21 @@ public class WebSecurityConfig {
     return manager;
   }
 */
+
+    
+  @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+                configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+		configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+                configuration.setAllowCredentials(true);
+                configuration.setExposedHeaders(List.of("Authorization"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;	
+    }
+    
   @Bean
   AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception{
       return http.getSharedObject(AuthenticationManagerBuilder.class)
@@ -65,7 +96,8 @@ public class WebSecurityConfig {
               .passwordEncoder(passwordEncoder())
               .and().build();
   }
-   @Bean
+  
+  @Bean
   PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }

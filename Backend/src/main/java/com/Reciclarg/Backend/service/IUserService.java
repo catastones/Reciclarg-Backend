@@ -10,4 +10,5 @@ public interface IUserService {
     public void SaveUsuario(User user);
     public void borrarUsuario(Long id);
     public User buscarUserById(Long id);
+    public User UltimoUserAgregado();
 }

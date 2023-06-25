@@ -11,12 +11,8 @@ import org.springframework.stereotype.Service;
 public class UserService implements IUserService {
 
     @Autowired 
-    public UserRepository UserRepo;
-    
-    
- 
-    
-
+    public UserRepository UserRepo; 
+   
     @Override
     public void SaveUsuario(User user) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -39,6 +35,11 @@ public class UserService implements IUserService {
     public User buscarUserByName(String username) {
         return UserRepo.findOneByUsername(username);
         
+    }
+
+    @Override
+    public User UltimoUserAgregado() {
+        return UserRepo.findTopByOrderByIdDesc();
     }
     
 }
