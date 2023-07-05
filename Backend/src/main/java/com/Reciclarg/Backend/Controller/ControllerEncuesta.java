@@ -26,11 +26,11 @@ public class ControllerEncuesta {
          
          return encuestaService.verEncuestas();
      }
-     /*
+     
      @PostMapping ("/addencuesta")
      public void nuevaEncuesta(@RequestBody Encuesta encuesta){
             encuestaService.SaveEncuesta(encuesta);
-     }*/
+     }
       @GetMapping ("/deleteEncuesta/{id}")
       public void borrarEncuesta(@PathVariable Long id){
           encuestaService.BorrarEncuestaById(id);
