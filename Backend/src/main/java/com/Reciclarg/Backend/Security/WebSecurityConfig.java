@@ -81,7 +81,7 @@ public class WebSecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
                 configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+		configuration.setAllowedOrigins(Arrays.asList("https://app.reciclarg.cloud/"));
 		configuration.setAllowedMethods(Arrays.asList("GET","POST"));
                 configuration.setAllowCredentials(true);
                 configuration.setExposedHeaders(List.of("Authorization"));
