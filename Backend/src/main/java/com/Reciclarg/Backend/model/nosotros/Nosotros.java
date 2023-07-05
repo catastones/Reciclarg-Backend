@@ -28,6 +28,7 @@ public class Nosotros {
     private String linkedin;
     private String github;
     private String twitter;
+    private String foto;
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "foto_id")
