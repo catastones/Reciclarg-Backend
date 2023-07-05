@@ -47,6 +47,7 @@ public class WebSecurityConfig {
         .authorizeRequests()
                 .requestMatchers("/zona/listarzonas").permitAll()
                 .requestMatchers("/user/newuser").permitAll()
+                .requestMatchers("/nosotros/listNosotros").permitAll()
         .anyRequest()
         .authenticated()
         .and()

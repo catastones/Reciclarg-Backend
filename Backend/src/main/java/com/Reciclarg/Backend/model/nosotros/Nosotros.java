@@ -23,7 +23,8 @@ public class Nosotros {
     
     private String nombre;
     private String apellido;
-    
+    private String role;
+    private String description;
     private String linkedin;
     private String github;
     private String twitter;
