@@ -66,9 +66,7 @@ public class UserdetailsImpl implements UserDetails{
         return usuario.getZona().getNombre();
     }
     
-    public byte[] getFoto(){
-        return usuario.getFotoPerfi().getPhoto();
-    }
+    
     
    
     @Override  
@@ -77,10 +75,9 @@ public class UserdetailsImpl implements UserDetails{
 "    \"id\":\"%s\",\n" +
 "    \"nombre\":\"%s\",\n" +
 "    \"apellido\":\"%s\",\n" +
-"    \"zona\":\"%s\",\n" + 
-"    \"fotoPerfil\":\"%s\",\n" + 
+"    \"zona\":\"%s\",\n" +     
 "    \"username\":\"%s\"\n" +             
-"}", getId(), getNombre(), getApellido(),getZona(),getFoto(),getUsername());
+"}", getId(), getNombre(), getApellido(),getZona(),getUsername());
 
        
     }
